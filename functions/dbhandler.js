@@ -1,6 +1,5 @@
-const dotenv = require('dotenv');
+const pg = require('pg');
 const { Sequelize, DataTypes } = require('sequelize');
-dotenv.config();
 
 
 // Sequelize for database, you can use what you want.
@@ -13,6 +12,7 @@ class DatabaseHandler {
 		this.password     = password;
 		this.sequelize    = new Sequelize({
 			dialect: 'postgres',
+			dialectModule: pg,
 			dialectOptions: {
 				ssl: {
 					require: true,
@@ -33,6 +33,17 @@ class DatabaseHandler {
 			console.log('Connection to database has been established successfully.');
 		} catch (error) {
 			console.error('Unable to connect to the database:', error);
+		}
+	}
+
+	async is_connected() {
+		try {
+			await this.sequelize.authenticate();
+			console.log('Database connection established successfully.');
+			return "true";
+		} catch (error) {
+			console.error('Unable to connect to the database:', error);
+			return "false";
 		}
 	}
 
@@ -168,14 +179,8 @@ class DatabaseHandler {
 	}
 }
 
-const dbHandler = new DatabaseHandler(
-	process.env.DB_HOST,
-	process.env.DB_USER,
-	process.env.DB_PASS,
-	process.env.DB_NAME,
-	process.env.DB_PORT
-);
-module.exports = dbHandler;
+
+module.exports = DatabaseHandler;
 
 
 // SAMPLE USECASE

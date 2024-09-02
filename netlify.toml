@@ -1,5 +1,7 @@
 [build]
   functions = "functions"
+  publish = "client/build"
+  command = "npm install && npm run build"
 
 [dev]
   publish = "client/build"
