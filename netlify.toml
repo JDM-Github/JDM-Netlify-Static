@@ -4,7 +4,8 @@
   command = "npm install && npm run build"
 
 [dev]
-  publish = "client/build"
+  functions = "functions"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"
