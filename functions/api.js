@@ -4,7 +4,13 @@ const serverless = require("serverless-http")
 const path       = require('path');
 const bodyParser = require('body-parser');
 
+const DatabaseHandler  = require('./dbHandler');
 const sendEmail = require('./emailSender.js');
+
+// const dbHandler = new DatabaseHandler(
+    
+// );
+// dbHandler.connect();
 
 const app    = express()
 const router = express.Router()
@@ -28,11 +34,17 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 
 
-router.post("/request_account", (req, res) => {
-    console.log("REQUEST TO ADMIN");
-    res.json("REQUEST TO ADMIN IS SUCCESS");
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    res.json({ success: true });
 });
 
+
+router.post('/register', async (req, res) => {
+    const { username, email, password } = req.body;
+    res.json({ success: true, "test" });
+});
 
 
 
